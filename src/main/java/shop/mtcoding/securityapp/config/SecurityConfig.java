@@ -17,17 +17,18 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // 1. CSRF 해제
-        http.csrf().disable();
+        http.csrf().disable(); // POSTMAN 접근해야 함!! - CSR할 때
 
         // 2. Form 로그인 설정
         http.formLogin(login -> login
                 .loginPage("/loginForm")
                 .usernameParameter("username") // 커스텀마이징 가능
                 .passwordParameter("password") // 커스텀마이징 가능
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/")
+                .loginProcessingUrl("/login") // POST + X-WWW-Form-UrlEncoded
+                // .defaultSuccessUrl("/")
                 .successHandler((req, resp, authentication) -> {
                     System.out.println("디버그 : 로그인이 완료되었습니다"); // 본 코드에서는 무조건 디버그 붙이자
+                    resp.sendRedirect("/");
                 })
                 .failureHandler((req, resp, ex) -> {
                     System.out.println("디버그 : 로그인 실패" + ex.getMessage()); // 본 코드에서는 무조건 디버그 붙이자

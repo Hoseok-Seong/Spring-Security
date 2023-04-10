@@ -15,7 +15,7 @@ public class UserRequest {
         private String role;
 
         public User toEntity() {
-            return User.builder().username(username).password(password).email(email).role(role).build();
+            return User.builder().username(username).password(password).email(email).role(role).status(true).build();
         }
     }
 }
