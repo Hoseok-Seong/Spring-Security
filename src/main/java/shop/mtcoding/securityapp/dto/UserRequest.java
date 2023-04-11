@@ -18,4 +18,11 @@ public class UserRequest {
             return User.builder().username(username).password(password).email(email).role(role).status(true).build();
         }
     }
+
+    @Getter
+    @Setter
+    public static class LoginDTO {
+        private String username;
+        private String password;
+    }
 }
