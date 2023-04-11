@@ -49,12 +49,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (SignatureVerificationException sve) {
                 log.error("토큰 검증 실패");
-                chain.doFilter(request, response);
             } catch (TokenExpiredException tee) {
                 log.error("토큰 만료됨");
+            } finally {
                 chain.doFilter(request, response);
             }
         }
-        chain.doFilter(request, response);
     }
 }
